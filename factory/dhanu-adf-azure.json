@@ -1,0 +1,9 @@
+{
+	"name": "dhanu-adf-azure",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ccdcee30-d625-41fe-9531-02eba7291ff9",
+		"tenantId": "3c813511-ba57-4672-accd-02518e070e29"
+	}
+}
