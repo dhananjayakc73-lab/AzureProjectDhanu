@@ -1,0 +1,87 @@
+{
+	"name": "Dhanu_Practice",
+	"properties": {
+		"activities": [
+			{
+				"name": "deltalake_copy",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select  *  from @{pipeline().parameters.table} where @{pipeline().parameters.cdc_cl} >",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Azure_sql",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Dhanu_par_practice",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "bronze",
+							"folder": {
+								"value": "@pipeline().parameters.table",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Current_time",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			}
+		],
+		"parameters": {
+			"Schema": {
+				"type": "string"
+			},
+			"table": {
+				"type": "string"
+			},
+			"cdc_cl": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"curreent": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
