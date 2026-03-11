@@ -12,7 +12,7 @@
 			"folder": {
 				"type": "string"
 			},
-			"path": {
+			"file_name": {
 				"type": "string"
 			}
 		},
